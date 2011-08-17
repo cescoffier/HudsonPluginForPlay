@@ -138,11 +138,13 @@ public class PlayAutoTestBuilder extends Builder{
                 // Substitute parameters
                 listener.getLogger().println("Substituting job parameters from " + play_cmd);
                 ParametersAction param = build.getAction(hudson.model.ParametersAction.class);
-                List<ParameterValue> values = param.getParameters();
-                if (values != null) {
-                    for (ParameterValue value : values) {
-                        String v = value.createVariableResolver(build).resolve(value.getName());
-                        play_cmd = play_cmd.replace("${" + value.getName() + "}", v);
+                if (param != null) {
+                    List<ParameterValue> values = param.getParameters();
+                    if (values != null) {
+                        for (ParameterValue value : values) {
+                            String v = value.createVariableResolver(build).resolve(value.getName());
+                            play_cmd = play_cmd.replace("${" + value.getName() + "}", v);
+                        }
                     }
                 }
 
